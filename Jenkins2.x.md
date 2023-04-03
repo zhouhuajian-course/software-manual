@@ -16,6 +16,10 @@ C:\Users\zhouh\.jenkins\secrets\initialAdminPassword
 
 ## Github上的shell脚本项目，提交代码后，Jenkins自动构建，将代码部署到多台 Linux 机器
 
+> 如果直接触发式构建，由于Github无法和本地Jenkins通信，所以降级为手动构建，如果需要自动构建，可用Gitlab或Jenkins部署在外网服务器。
+
+> 每个项目都会有自己的工作空间，其实就是项目的工作目录 例如 C:\Users\zhouh\.jenkins\workspace\Test 工作空间也可以自定义为本地代码项目位置
+
 1. 安装插件
 
 Manage Jenkins -> 插件管理 -> Available Plugins 
@@ -30,13 +34,31 @@ Dashboard -> Manage Jenkins -> Configure System -> Publish Over SSH
 
 add SSH Servers
 
-192.168.1.205 192.168.1.205 root -> 高级 Use password authentication, or use a different key -> root  
+192.168.1.205 192.168.1.205 root -> 高级 Use password authentication, or use a different key -> root -> Remote Directory -> / (基础目录，传输文件的根目录)
 Test Configuration -> success
 
-192.168.1.206 192.168.1.206 root -> 高级 Use password authentication, or use a different key -> root  
+192.168.1.206 192.168.1.206 root -> 高级 Use password authentication, or use a different key -> root -> Remote Directory -> / (基础目录，传输文件的根目录)
 Test Configuration -> success
 
 保存
 
-3. 
+3. 创建并配置项目
+
+新建Item -> 项目名 Test -> Freestyle Project -> 确定
+
+源码管理 -> Git -> Repository URL -> git@github.com:zhouhuajian-course/software-manual.git -> 指定分支（为空时代表any）-> */main
+
+Build Steps -> Send files or execute commands over SSH 
+
+第一台 192.168.1.205 -> 高级 -> Verbose output in console -> Transfer Set Source files -> test/*.sh -> Remove prefix -> test -> Remote directory -> /opt  
+Add Server
+第二台 192.168.1.206 -> 高级 -> Verbose output in console -> Transfer Set Source files -> test/*.sh -> Remove prefix -> test -> Remote directory -> /opt  
+保存
+
+4. 构建项目
+
+Build Now
+
+
+
 
