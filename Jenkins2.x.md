@@ -120,4 +120,9 @@ Build step 'Send files or execute commands over SSH' changed build result to SUC
 Finished: SUCCESS
 ```
 
+## 源码管理 Subversion
+
+安装插件 Subversion
+
+源码管理 -> Subversion -> Repository URL -> Credentials -> 用户名、密码 
 
