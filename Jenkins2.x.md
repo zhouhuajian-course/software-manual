@@ -34,10 +34,10 @@ Dashboard -> Manage Jenkins -> Configure System -> Publish Over SSH
 
 add SSH Servers
 
-192.168.1.205 192.168.1.205 root -> 高级 Use password authentication, or use a different key -> root -> Remote Directory -> / (基础目录，传输文件的根目录)
+192.168.1.205 192.168.1.205 root -> 高级 Use password authentication, or use a different key -> root -> Remote Directory -> /root (基础目录，传输文件的根目录)
 Test Configuration -> success
 
-192.168.1.206 192.168.1.206 root -> 高级 Use password authentication, or use a different key -> root -> Remote Directory -> / (基础目录，传输文件的根目录)
+192.168.1.206 192.168.1.206 root -> 高级 Use password authentication, or use a different key -> root -> Remote Directory -> /root (基础目录，传输文件的根目录)
 Test Configuration -> success
 
 保存
@@ -50,9 +50,19 @@ Test Configuration -> success
 
 Build Steps -> Send files or execute commands over SSH 
 
-第一台 192.168.1.205 -> 高级 -> Verbose output in console -> Transfer Set Source files -> test/*.sh -> Remove prefix -> test -> Remote directory -> /opt  
+第一台 192.168.1.205 -> 高级 -> Verbose output in console -> Transfer Set Source files -> test/*.sh -> Remove prefix -> test -> Remote directory -> test (/root/test will be created)   
+-> Exec command
+```shell
+cd /root/test
+chmod +x *.sh
+```
 Add Server
-第二台 192.168.1.206 -> 高级 -> Verbose output in console -> Transfer Set Source files -> test/*.sh -> Remove prefix -> test -> Remote directory -> /opt  
+第二台 192.168.1.206 -> 高级 -> Verbose output in console -> Transfer Set Source files -> test/*.sh -> Remove prefix -> test -> Remote directory -> test  
+-> Exec command
+```shell
+cd /root/test
+chmod +x *.sh
+```
 保存
 
 4. 构建项目
@@ -62,10 +72,10 @@ Build Now
 ```
 Started by user admin
 Running as SYSTEM
-Building in workspace C:\Users\zhouh\.jenkins\workspace\Test1
+Building in workspace C:\Users\zhouh\.jenkins\workspace\Test
 The recommended git tool is: NONE
 No credentials specified
- > git.exe rev-parse --resolve-git-dir C:\Users\zhouh\.jenkins\workspace\Test1\.git # timeout=10
+ > git.exe rev-parse --resolve-git-dir C:\Users\zhouh\.jenkins\workspace\Test\.git # timeout=10
 Fetching changes from the remote Git repository
  > git.exe config remote.origin.url git@github.com:zhouhuajian-course/software-manual.git # timeout=10
 Fetching upstream changes from git@github.com:zhouhuajian-course/software-manual.git
@@ -73,11 +83,11 @@ Fetching upstream changes from git@github.com:zhouhuajian-course/software-manual
  > git --version # 'git version 2.36.0.windows.1'
  > git.exe fetch --tags --force --progress -- git@github.com:zhouhuajian-course/software-manual.git +refs/heads/*:refs/remotes/origin/* # timeout=10
  > git.exe rev-parse "refs/remotes/origin/main^{commit}" # timeout=10
-Checking out Revision b7968ab67afa5ee30d2ba21964ba6808e0c32431 (refs/remotes/origin/main)
+Checking out Revision 122b2a099b7793283a479237be8074d62ccc3118 (refs/remotes/origin/main)
  > git.exe config core.sparsecheckout # timeout=10
- > git.exe checkout -f b7968ab67afa5ee30d2ba21964ba6808e0c32431 # timeout=10
+ > git.exe checkout -f 122b2a099b7793283a479237be8074d62ccc3118 # timeout=10
 Commit message: "Update Jenkins2.x.md"
- > git.exe rev-list --no-walk b7968ab67afa5ee30d2ba21964ba6808e0c32431 # timeout=10
+ > git.exe rev-list --no-walk 122b2a099b7793283a479237be8074d62ccc3118 # timeout=10
 SSH: Connecting from host [HP笔记本]
 SSH: Connecting with configuration [192.168.1.205] ...
 SSH: Creating session: username [root], hostname [192.168.1.205], port [22]
@@ -87,14 +97,20 @@ SSH: Opening SFTP channel ...
 SSH: SFTP channel open
 SSH: Connecting SFTP channel ...
 SSH: Connected
-SSH: cd [/]
+SSH: cd [/root]
 SSH: OK
-SSH: cd [/]
+SSH: cd [/root]
 SSH: OK
-SSH: cd [opt]
+SSH: cd [test]
 SSH: OK
 SSH: put [test.sh]
 SSH: OK
+SSH: Opening exec channel ...
+SSH: EXEC: channel open
+SSH: EXEC: STDOUT/STDERR from command [cd /root/test
+chmod +x *.sh] ...
+SSH: EXEC: connected
+SSH: EXEC: completed after 202 ms
 SSH: Disconnecting configuration [192.168.1.205] ...
 SSH: Transferred 1 file(s)
 SSH: Connecting from host [HP笔记本]
@@ -106,14 +122,22 @@ SSH: Opening SFTP channel ...
 SSH: SFTP channel open
 SSH: Connecting SFTP channel ...
 SSH: Connected
-SSH: cd [/]
+SSH: cd [/root]
 SSH: OK
-SSH: cd [/]
+SSH: cd [/root]
 SSH: OK
-SSH: cd [opt]
+SSH: mkdir [test]
+SSH: OK
+SSH: cd [test]
 SSH: OK
 SSH: put [test.sh]
 SSH: OK
+SSH: Opening exec channel ...
+SSH: EXEC: channel open
+SSH: EXEC: STDOUT/STDERR from command [cd /root/test
+chmod +x *.sh] ...
+SSH: EXEC: connected
+SSH: EXEC: completed after 201 ms
 SSH: Disconnecting configuration [192.168.1.206] ...
 SSH: Transferred 1 file(s)
 Build step 'Send files or execute commands over SSH' changed build result to SUCCESS
