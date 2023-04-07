@@ -2,6 +2,20 @@
 
 https://jmeter.apache.org/
 
+## 安装 DI KafkaMeter 和 Kafka Support 插件
+
+选项 -> Plugins Manager -> Available Plugins -> Kafka -> 选中 DI KafkaMeter 和 Kafka Support -> Apply Changes and Restart JMeter
+
+检查
+
+选项 -> Plugins Manager -> Installed Plugins -> Kafka
+
+## 运行
+
+进入 bin 目录 -> cmd
+
+java -jar ApacheJMeter.jar
+
 ## 安装 Plugins Manager 
 
 Plugins Manager 可以使用UI的方式 安装、更新、卸载插件，而不是手动操作
