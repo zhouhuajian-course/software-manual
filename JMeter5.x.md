@@ -16,7 +16,7 @@ https://jmeter.apache.org/
 
 确保 jpgc - Standard Set 和 5 Additional Graphs 插件已安装
 
-1. 测试计划 -> 右键 -> 线程(用户) -> 线程组 或 jp@gc - Stepping Thread Group -> 修改线程数等
+1. 测试计划 -> 右键 -> 线程(用户) -> 线程组 或 jp@gc - Stepping Thread Group (阶梯式加压测试) -> 修改线程数等
 2. 线程组 -> 右键 -> 取样器 -> HTTP请求 -> 填写 协议 域名或IP 端口 -> http gnu.org 80
 3. 增加断言
 4. 线程组 -> 右键 -> 监听器 -> 依次添加 查看结果树 聚合报告 jp@gc - Transactions per Second jp@gc - Connect Times Over Time
