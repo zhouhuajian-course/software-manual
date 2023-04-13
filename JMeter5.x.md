@@ -24,6 +24,8 @@ https://jmeter.apache.org/
 
 ## 安装 jpgc - Standard Set 和 5 Additional Graphs 插件
 
+JMeter Plugins at Google Code (JP@GC) is a popular third-party plugins set for JMeter
+
 ```
 5 Additional Graphs
 
