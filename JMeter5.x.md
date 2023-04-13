@@ -9,14 +9,15 @@ https://jmeter.apache.org/
 3. 压测需要至少添加后面四个监听器 查看结果树 聚合报告 jp@gc - Transactions per Second jp@gc - Connect Times Over Time
 4. 如果压测过程中出现奇怪报错，没有明确解决方案时，使用以下步骤解决  
    对于服务端，重启服务端、修改服务端端口、将服务端部署到另一台机器  
-   对于客户端，使用不同的电脑压测，确保不是电脑本身问题。
+   对于客户端，使用不同的电脑压测，确保不是电脑本身问题；
+5. 压测时间长，可以让图表看起来更加平稳。
 
 ## 压测接口步骤
 
-确保 5 Additional Graphs 插件已安装
+确保 jpgc - Standard Set 和 5 Additional Graphs 插件已安装
 
-1. 测试计划 -> 右键 -> 线程(用户) -> 线程组 或 jp@gc - Stepping Thread Group
-2. 线程组 -> 右键 -> 取样器 -> HTTP请求 -> 填写 协议 域名或IP 端口 -> https gnu.org 80
+1. 测试计划 -> 右键 -> 线程(用户) -> 线程组 或 jp@gc - Stepping Thread Group -> 修改线程数等
+2. 线程组 -> 右键 -> 取样器 -> HTTP请求 -> 填写 协议 域名或IP 端口 -> http gnu.org 80
 3. 增加断言
 4. 线程组 -> 右键 -> 监听器 -> 依次添加 查看结果树 聚合报告 jp@gc - Transactions per Second jp@gc - Connect Times Over Time
 5. 运行
