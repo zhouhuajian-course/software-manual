@@ -1,5 +1,11 @@
 # VisualStudioCode
 
+https://github.com/Microsoft/vscode/ 
+
+主要由 TypeScript 开发
+
+TypeScript 是微软开发的一个开源的编程语言，通过在 JavaScript 的基础上添加静态类型定义构建而成。
+
 ## IntelliSense
 
 智能感知
