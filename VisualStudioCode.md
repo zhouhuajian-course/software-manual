@@ -1,6 +1,6 @@
 # VisualStudioCode
 
-## InteeliSense
+## IntelliSense
 
 智能感知
 
