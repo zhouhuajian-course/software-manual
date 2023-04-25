@@ -4,7 +4,7 @@
 
 1. Virtual Machine Settings -> Hard Disk -> Expand disk capacity -> 设置为40GB (原来20GB) -> Expand
 
-Warning：磁盘已成功扩展。您必须从操作系统内部对磁盘重新进行分区和扩展文件系统。
+   Warning：磁盘已成功扩展。您必须从操作系统内部对磁盘重新进行分区和扩展文件系统。
 
 2. 进入 CentOS 操作
 
