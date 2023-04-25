@@ -1,5 +1,13 @@
 # Jenkins 2.x
 
+## 指定要传输的文件和文件夹
+
+Transfer Set Source files
+
+file1,file2,file3,dir1/,dir2/,dir3/
+
+逗号分隔的列表(a comma seperated list)，目录以/结尾，使用 Ant 的规则 https://ant.apache.org/manual/dirtasks.html#patterns
+
 ## 下载安装
 
 下载 war 包
