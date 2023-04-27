@@ -1,5 +1,40 @@
 # Jenkins 2.x
 
+## 执行命令让程序后台运行出现部署失败
+
+例如
+```shell
+python3 app.py &
+nohup python3 app.py &
+```
+
+解决 (解决思路，执行命令后，是否需要再按回车才能继续控制)
+
+```shell
+nohup python3 app.py >flask.log 2>&1 &
+```
+
+区别
+
+```shell
+[root@centos /root]# python3 app.py &
+[1] 6208
+[root@centos /root]#  * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+ * Running on http://192.168.1.206:8080/ (Press CTRL+C to quit)
+(需要按回车，才能继续操作shell)
+
+[root@centos /root]# python3 app.py >flask.log 2>&1 &
+[1] 6432
+[root@centos /root]# 
+(直接能继续操作shell)
+```
+
 ## 指定要传输的文件和文件夹
 
 Transfer Set Source files
