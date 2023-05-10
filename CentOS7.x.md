@@ -4,6 +4,49 @@
 
 https://github.com/zhouhuajian-course/linux-shell-script-example
 
+## 源码安装 mysql 8.0.33
+
+https://dev.mysql.com/doc/mysql-sourcebuild-excerpt/8.0/en/installing-source-distribution.html
+
+```shell
+# Preconfiguration setup
+$ groupadd mysql
+$ useradd -r -g mysql -s /bin/false mysql
+# Beginning of source-build specific instructions
+$ tar zxvf mysql-VERSION.tar.gz
+$ cd mysql-VERSION
+$ mkdir bld
+$ cd bld
+$ cmake ..
+$ make
+$ make install
+# End of source-build specific instructions
+# Postinstallation setup
+$ cd /usr/local/mysql
+$ mkdir mysql-files
+$ chown mysql:mysql mysql-files
+$ chmod 750 mysql-files
+$ bin/mysqld --initialize --user=mysql
+$ bin/mysql_ssl_rsa_setup
+$ bin/mysqld_safe --user=mysql &
+# Next command is optional
+$ cp support-files/mysql.server /etc/init.d/mysql.server
+```
+
+```shell
+$ tar -zxvf mysql-boost-8.0.33.tar.gz
+$ yum install -y epel-release
+$ yum install -y cmake3
+$ yum install -y centos-release-scl
+$ yum install -y devtoolset-11-gcc devtoolset-11-gcc-c++ devtoolset-11-binutils
+$ yum install -y openssl openssl-devel  
+$ yum install -y ncurses-devel  
+$ mysqlSourcePath=/mysql/mysql-8.0.33
+$ cmake3 -DCMAKE_INSTALL_PREFIX=${mysqlSourcePath} -DDOWNLOAD_BOOST=0 -DWITH_BOOST=${mysqlSourcePath}/boost/boost_1_77_0 ${mysqlSourcePath}
+$ make
+$ make install
+...
+
 ## 安装 devtoolset 开发工具集 c/c++
 
 ```shell
