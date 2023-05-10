@@ -7,8 +7,8 @@ https://github.com/zhouhuajian-course/linux-shell-script-example
 ## 安装 devtoolset 开发工具集 c/c++
 
 ```shell
-yum install centos-release-scl
-yum install devtoolset-11-gcc devtoolset-11-gcc-c++ devtoolset-11-binutils
+yum install -y centos-release-scl
+yum install -y devtoolset-11-gcc devtoolset-11-gcc-c++ devtoolset-11-binutils
 ```
 
 ## 安装 cmake3
