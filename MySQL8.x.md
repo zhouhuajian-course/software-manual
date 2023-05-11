@@ -1,5 +1,38 @@
 # MySQL 8.x 手册
 
+## 
+
+## 修改用户
+
+修改密码
+
+```sql
+mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY 'root';
+Query OK, 0 rows affected (0.01 sec)
+mysql> FLUSH PRIVILEGES;
+Query OK, 0 rows affected (0.00 sec)
+```
+
+修改密码，并指定加密方式
+
+```sql
+mysql> ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';
+Query OK, 0 rows affected (0.01 sec)
+mysql> FLUSH PRIVILEGES;
+Query OK, 0 rows affected (0.00 sec)
+```
+
+远程登录
+
+```sql
+mysql> UPDATE mysql.user SET host='%' WHERE user='root';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+mysql> FLUSH PRIVILEGES;
+Query OK, 0 rows affected (0.01 sec)
+```
+
+
 ## MVCC（多版本并发控制）
 
 Multi-Version Concurrency Control
