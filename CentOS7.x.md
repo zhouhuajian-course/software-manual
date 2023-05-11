@@ -32,6 +32,12 @@ $ bin/mysql_ssl_rsa_setup
 $ bin/mysqld_safe --user=mysql &
 # Next command is optional
 $ cp support-files/mysql.server /etc/init.d/mysql.server
+
+修改初始密码 留意bin/mysqld --initialize --user=mysql输出的初始密码
+mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY 'root';
+Query OK, 0 rows affected (0.01 sec)
+mysql> FLUSH PRIVILEGES;
+Query OK, 0 rows affected (0.00 sec)
 ```
 
 ```shell
