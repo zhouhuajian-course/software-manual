@@ -17,7 +17,8 @@ $ tar zxvf mysql-VERSION.tar.gz
 $ cd mysql-VERSION
 $ mkdir bld
 $ cd bld
-$ cmake ..
+$ cmake .. (会报cmake版本为2，以及boost找不到错误，改为下方命令)
+$   cmake3 -DWITH_BOOST=../boost/boost_1_77_0 ..
 $ make
 $ make install
 # End of source-build specific instructions
