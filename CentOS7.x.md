@@ -24,7 +24,7 @@ $ make install
 # End of source-build specific instructions
 # Postinstallation setup
 $ cd /usr/local/mysql
-$ mkdir mysql-files
+$ mkdir mysql-files (主要用于数据导入与导出或叫做备份与还原，MySQL备份会产生文件，xxx.sql或xxx.txt。这些文件默认放在mysql-files。)
 $ chown mysql:mysql mysql-files
 $ chmod 750 mysql-files
 $ bin/mysqld --initialize --user=mysql
