@@ -1,6 +1,28 @@
 # MySQL 8.x 手册
 
-## 
+## 数据库类型
+
+**金额数据类型**
+
+不能用float double不精确，使用decimal
+
+```sql
+create table t1 (c1 float(10, 2), c2 double(10,2), c3 decimal(10,2));
+insert into t1 values (1234567.23, 1234567.23, 1234567.23);
+select * from t1;
+-- 1234567.25, 1234567.23, 1234567.23
+```
+
+**BLOB TEXT数据类型**
+
+The four BLOB types are TINYBLOB, BLOB, MEDIUMBLOB, and LONGBLOB.   
+These differ only in the maximum length of the values they can hold. 
+
+The four TEXT types are TINYTEXT, TEXT, MEDIUMTEXT, and LONGTEXT.   
+
+**不能有默认值的数据类型**
+
+BLOB, TEXT, GEOMETRY or JSON column 'col1' can't have a default value
 
 ## 修改用户
 
