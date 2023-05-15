@@ -2,6 +2,42 @@
 
 https://jmeter.apache.org/
 
+## 使用CSV数据
+
+```
+Thread Group -> Add -> Config Element -> CSV Data Set Config
+
+Filename: 绝对路径，建议使用Browse C:/Users/zhouhuajian/Desktop/student.csv
+File encoding: 有中文设置下编码
+Variable Names (comma-delimited): 变量名 如果CSV第一行没有列名，则需要在这里设置，英文逗号分割
+Ignore first line(only used if Variable Names is not empty): 如果设置了变量名，并且CSV第一行有列名，那么可以设置为True，忽略CSV的第一行
+Delimiter (use '\t' for tab): 分隔符 默认英文逗号
+Allow quoted data?: 运行有引号的数据，如果CSV是有引号的数据，要设置为True，例如"小明",'18'
+Recycle on EOF?: 循环CSV数据   这两个配置 True-False False-True
+Stop thread on EOF?: CSV数据没了，停止线程？
+Sharing mode: CSV数据共享模式，
+   假色有两个线程组
+   All threads：可以理解为所有线程，共用一份CSV数据
+   Current thread group: 可以理解为每个线程组，有一份独立的CSV数据
+   Current thread: 可以理解为每个线程，有一份独立的CSV数据
+   
+name,age
+小明,18
+小红,20   
+
+HTTP Request -> httpbin.org POST /post
+Body Data -> name=${name}&age=${age}
+
+View Results Tree -> Request -> Request Body
+
+   POST http://httpbin.org/post
+
+   POST data:
+   name=小明&age=18
+   
+   [no cookies]
+```
+
 ## 压测接口
 
 1. 单次发送，查看接口结果是否正确，服务端是否报错
