@@ -1,5 +1,14 @@
 # SSH
 
+## 服务器上 用户/.ssh 文件夹
+
+```
+id_rsa -> ssh 私钥
+id_rsa.pub -> ssh 公钥
+known_hosts -> 记录登录用户的主机公钥，避免中间人攻击。每次登录会校对，如果公钥不同，OpenSSH 会发出警告。第一次登录的时候记录，会提示
+authorized_keys -> 记录已授权的密钥。用于免密登录
+```
+
 ## 免密登录
 
 没有生成私钥公钥的先生成
@@ -7,6 +16,9 @@
 方式一
 
 ```shell
+
+(ssh-copy-id Windows默认没有，git软件有提供，git-bash.exe "D:\git\usr\bin\ssh-copy-id")
+
 $ ssh-copy-id root@192.168.1.206
 /usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "/c/Users/zhouhuajian/.ssh/id_rsa.pub"
 /usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
