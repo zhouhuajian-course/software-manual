@@ -1,5 +1,10 @@
 # Jenkins 2.x
 
+## Build 未知/奇怪异常
+
+1. 貌似C++开发的一个服务端命令无法正常传输 -> 传输列表去掉，改为手动传输
+2. 貌似ps -ef | grep xxx | grep -v grep | xargs kill -9会出现奇怪退出码错误 -> 改为 ps -ef | grep -m 1 xxx | xargs kill -9
+
 ## Exec command 执行命令程序后台运行出现部署异常
 
 例如
