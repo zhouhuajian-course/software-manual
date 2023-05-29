@@ -1,5 +1,50 @@
 # Redis
 
+## 列表 lists
+
+Redis lists are linked lists of string values. Implement stacks and queues. Build queue management for background worker systems.
+
+链表，存储字符串值。可实现栈和队列。
+
+```redis
+
+```
+
+## 字符串 strings
+
+Redis strings store sequences of bytes, including text, serialized objects, and binary arrays. As such, strings are the most basic Redis data type. They're often used for caching, but they support additional functionality that lets you implement counters and perform bitwise operations, too.
+
+字节序列
+
+```redis
+# 页面缓存
+redis> SET good:1:page "<html>商品页面内容</html>" EX 3600
+"OK"
+redis> GET good:1:page
+"<html>商品页面内容</html>"
+# 获取缓存剩余时间
+redis> TTL good:1:page
+(integer) 3587
+# 计数器 页面浏览数
+redis> INCR good:1:views
+(integer) 1
+redis> INCR good:1:views
+(integer) 2
+redis> INCR good:1:views
+(integer) 3
+redis> GET good:1:views
+"3"
+# 记录JSON数据
+redis> SET user:1 "{\"name\":\"小明\",\"age\":18}" EX 3600
+"OK"
+redis> SET user:2 "{\"name\":\"小兰\",\"age\":20}" EX 3600
+"OK"
+# 批量获取
+redis> MGET user:1 user:2
+1) "{"name":"小明","age":18}"
+2) "{"name":"小兰","age":20}"
+```
+
 ## 成员唯一有序的集合 sorted sets
 
 A Redis sorted set is a collection of unique strings (members) ordered by an associated score. When more than one string has the same score, the strings are ordered lexicographically. 
