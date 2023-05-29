@@ -17,6 +17,7 @@ $ useradd -g sftp -s /sbin/nologin sftpuser
 $ echo "123456" | passwd --stdin sftpuser
 # 2. 设置用户家目录所有者和权限，貌似必须设置所有者为root，权限不超过755
 # 默认 drwx------. 2 sftpuser sftp  62 May 29 16:06 sftpuser
+$ cd /home/sftpuser
 $ chown root:sftp sftpuser
 $ chown 755 sftpuser
 # 修改后 drwxr-xr-x. 2 root sftp  62 May 29 16:06 sftpuser
