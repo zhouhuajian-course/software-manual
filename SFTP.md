@@ -18,7 +18,7 @@ $ echo "123456" | passwd --stdin sftpuser
 # 2. 设置用户家目录所有者和权限，貌似必须设置所有者为root，权限不超过755
 # 默认 drwx------. 2 sftpuser sftp  62 May 29 16:06 sftpuser
 $ chown root:sftp /home/sftpuser
-$ chown 755 /home/sftpuser
+$ chmod 755 /home/sftpuser
 # 修改后 drwxr-xr-x. 2 root sftp  62 May 29 16:06 sftpuser
 # 3. 修改sshd配置
 $ cp /etc/sshsshd_config /etc/sshsshd_config.back
