@@ -9,10 +9,11 @@ $ vim my.cnf
 [mysqld_multi]
 mysqld     = /usr/local/mysql/bin/mysqld_safe
 # mysqladmin位置，用来关闭mysqld
-mysqladmin = /usr/local/mysql/bin/mysqladmin
 # 调用mysqladmin要用的账号密码
-user       = root
-password   =
+mysqladmin = /usr/local/mysql/bin/mysqladmin
+user       = multi_admin
+# password   =
+pass       = multi_admin
 
 [mysqld3307]
 socket     = /tmp/mysql.sock3307
@@ -21,6 +22,7 @@ pid-file   = /usr/local/mysql/multi-mysql/3307_data/3307.pid
 datadir    = /usr/local/mysql/multi-mysql/3307_data
 user       = mysql
 # log-error=/usr/local/mysql/multi-mysql/3307_error.log
+server_id  = 3307
 
 [mysqld3308]
 socket     = /tmp/mysql.sock3308
@@ -29,32 +31,38 @@ pid-file   = /usr/local/mysql/multi-mysql/3308_data/3308.pid
 datadir    = /usr/local/mysql/multi-mysql/3308_data
 user       = mysql
 # log-error=/usr/local/mysql/multi-mysql/3307_error.log
+server_id  = 3308
 
-$ mysqld_multi --defaults-extra-file=my.cnf start 3307
-$ mysqld_multi --defaults-extra-file=my.cnf start 3308
+$ mysqld_multi --defaults-extra-file=my.cnf start # 或指定 3307 
 $ mysqld_multi --defaults-extra-file=my.cnf report
 Reporting MySQL servers
 MySQL server from group: mysqld3307 is running
 MySQL server from group: mysqld3308 is running
 
-$ mysql --host 127.0.0.1 --port 3307 -e "show databases;"
-+--------------------+
-| Database           |
-+--------------------+
-| information_schema |
-| mysql              |
-| performance_schema |
-| sys                |
-+--------------------+
-$ mysql --host 127.0.0.1 --port 3308 -e "show databases;"
-+--------------------+
-| Database           |
-+--------------------+
-| information_schema |
-| mysql              |
-| performance_schema |
-| sys                |
-+--------------------+
+
+$ mysql --host 127.0.0.1 --port 3307 -e "show variables like 'server_id';"
++---------------+-------+
+| Variable_name | Value |
++---------------+-------+
+| server_id     | 3307  |
++---------------+-------+
+$ mysql --host 127.0.0.1 --port 3307 -e "CREATE USER 'multi_admin'@'localhost' IDENTIFIED BY 'multi_admin';"
+$ mysql --host 127.0.0.1 --port 3307 -e "GRANT SHUTDOWN ON *.* TO 'multi_admin'@'localhost';"
+
+$  mysql --host 127.0.0.1 --port 3308 -e "show variables like 'server_id';"
++---------------+-------+
+| Variable_name | Value |
++---------------+-------+
+| server_id     | 3308  |
++---------------+-------+
+$ mysql --host 127.0.0.1 --port 3308 -e "CREATE USER 'multi_admin'@'localhost' IDENTIFIED BY 'multi_admin';"
+$ mysql --host 127.0.0.1 --port 3308 -e "GRANT SHUTDOWN ON *.* TO 'multi_admin'@'localhost';"
+
+$ mysqld_multi --defaults-extra-file=my.cnf stop
+$ mysqld_multi --defaults-extra-file=my.cnf report
+Reporting MySQL servers
+MySQL server from group: mysqld3307 is not running
+MySQL server from group: mysqld3308 is not running
 ```
 
 ## 数据库类型
