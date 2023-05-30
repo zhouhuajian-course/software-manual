@@ -1,5 +1,62 @@
 # MySQL 8.x 手册
 
+## 单机部署多实例
+
+```shell
+$ export PATH=$PATH:/usr/local/mysql/bin
+$ mysqld_multi --example
+$ vim my.cnf
+[mysqld_multi]
+mysqld     = /usr/local/mysql/bin/mysqld_safe
+# mysqladmin位置，用来关闭mysqld
+mysqladmin = /usr/local/mysql/bin/mysqladmin
+# 调用mysqladmin要用的账号密码
+user       = root
+password   =
+
+[mysqld3307]
+socket     = /tmp/mysql.sock3307
+port       = 3307
+pid-file   = /usr/local/mysql/multi-mysql/3307_data/3307.pid
+datadir    = /usr/local/mysql/multi-mysql/3307_data
+user       = mysql
+# log-error=/usr/local/mysql/multi-mysql/3307_error.log
+
+[mysqld3308]
+socket     = /tmp/mysql.sock3308
+port       = 3308
+pid-file   = /usr/local/mysql/multi-mysql/3308_data/3308.pid
+datadir    = /usr/local/mysql/multi-mysql/3308_data
+user       = mysql
+# log-error=/usr/local/mysql/multi-mysql/3307_error.log
+
+$ mysqld_multi --defaults-extra-file=my.cnf start 3307
+$ mysqld_multi --defaults-extra-file=my.cnf start 3308
+$ mysqld_multi --defaults-extra-file=my.cnf report
+Reporting MySQL servers
+MySQL server from group: mysqld3307 is running
+MySQL server from group: mysqld3308 is running
+
+$ mysql --host 127.0.0.1 --port 3307 -e "show databases;"
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+$ mysql --host 127.0.0.1 --port 3308 -e "show databases;"
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+```
+
 ## 数据库类型
 
 **金额数据类型**
