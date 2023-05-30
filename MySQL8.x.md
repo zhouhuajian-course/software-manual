@@ -1,6 +1,261 @@
 # MySQL 8.x 手册
 
+## 副本/主从
+
+注：全新两个实例，省略主mysqldump备份，然后从mysql执行
+
+主
+
+```shell
+$ mysql --host 127.0.0.1 --port 3307 
+
+mysql> CREATE USER 'repl'@'%' IDENTIFIED WITH mysql_native_password BY 'repl';
+# 默认的caching_sha2_password，从连接主时，show replica status，会出现错误
+# Message: Authentication plugin 'caching_sha2_password' reported error: Authentication requires secure connection.
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> GRANT REPLICATION SLAVE ON *.* TO 'repl'@'%';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SHOW MASTER STATUS\G
+*************************** 1. row ***************************
+             File: binlog.000007
+         Position: 690
+     Binlog_Do_DB: 
+ Binlog_Ignore_DB: 
+Executed_Gtid_Set: 
+1 row in set (0.00 sec)
+```
+
+从
+
+```shell
+$ mysql -h127.0.0.1 --port=3308
+
+mysql>  CHANGE REPLICATION SOURCE TO 
+    ->     SOURCE_HOST='192.168.1.205',
+    ->     SOURCE_PORT=3307,
+    ->     SOURCE_USER='repl',
+    ->     SOURCE_PASSWORD='repl',
+    ->     SOURCE_LOG_FILE='binlog.000007',
+    ->     SOURCE_LOG_POS=690; \c
+
+mysql> CHANGE REPLICATION SOURCE TO SOURCE_HOST='192.168.1.205', SOURCE_PORT=3307, SOURCE_USER='repl', SOURCE_PASSWORD='repl', SOURCE_LOG_FILE='binlog.000007', SOURCE_LOG_POS=1254;
+
+mysql> START REPLICA;
+Query OK, 0 rows affected (0.01 sec)
+
+# 重要看 Replica_IO_Running Replica_SQL_Running 都要为 Yes，
+# 否者看这里的错误日志，并修复
+mysql> SHOW REPLICA STATUS\G
+*************************** 1. row ***************************
+             Replica_IO_State: Waiting for source to send event
+                  Source_Host: 192.168.1.205
+                  Source_User: repl
+                  Source_Port: 3307
+                Connect_Retry: 60
+              Source_Log_File: binlog.000007
+          Read_Source_Log_Pos: 1254
+               Relay_Log_File: centos-relay-bin.000002
+                Relay_Log_Pos: 323
+        Relay_Source_Log_File: binlog.000007
+           Replica_IO_Running: Yes
+          Replica_SQL_Running: Yes
+              Replicate_Do_DB: 
+          Replicate_Ignore_DB: 
+           Replicate_Do_Table: 
+       Replicate_Ignore_Table: 
+      Replicate_Wild_Do_Table: 
+  Replicate_Wild_Ignore_Table: 
+                   Last_Errno: 0
+                   Last_Error: 
+                 Skip_Counter: 0
+          Exec_Source_Log_Pos: 1254
+              Relay_Log_Space: 534
+              Until_Condition: None
+               Until_Log_File: 
+                Until_Log_Pos: 0
+           Source_SSL_Allowed: No
+           Source_SSL_CA_File: 
+           Source_SSL_CA_Path: 
+              Source_SSL_Cert: 
+            Source_SSL_Cipher: 
+               Source_SSL_Key: 
+        Seconds_Behind_Source: 0
+Source_SSL_Verify_Server_Cert: No
+                Last_IO_Errno: 0
+                Last_IO_Error: 
+               Last_SQL_Errno: 0
+               Last_SQL_Error: 
+  Replicate_Ignore_Server_Ids: 
+             Source_Server_Id: 3307
+                  Source_UUID: e5a25096-fec1-11ed-8f94-000c29dc1b1f
+             Source_Info_File: mysql.slave_master_info
+                    SQL_Delay: 0
+          SQL_Remaining_Delay: NULL
+    Replica_SQL_Running_State: Replica has read all relay log; waiting for more updates
+           Source_Retry_Count: 86400
+                  Source_Bind: 
+      Last_IO_Error_Timestamp: 
+     Last_SQL_Error_Timestamp: 
+               Source_SSL_Crl: 
+           Source_SSL_Crlpath: 
+           Retrieved_Gtid_Set: 
+            Executed_Gtid_Set: 
+                Auto_Position: 0
+         Replicate_Rewrite_DB: 
+                 Channel_Name: 
+           Source_TLS_Version: 
+       Source_public_key_path: 
+        Get_Source_public_key: 0
+            Network_Namespace: 
+1 row in set (0.00 sec)
+
+# 如果要停止
+# mysql> STOP REPLICA;
+# Query OK, 0 rows affected, 1 warning (0.00 sec)
+```
+
+测试
+
+主
+
+```shell
+mysql> create database test;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use test;
+Database changed
+mysql> create table table1 (column1 int, column2 int);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into table1 values (100, 200);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from table1;
++---------+---------+
+| column1 | column2 |
++---------+---------+
+|     100 |     200 |
++---------+---------+
+1 row in set (0.00 sec)
+
+mysql> show master status\G
+*************************** 1. row ***************************
+             File: binlog.000007
+         Position: 1932
+     Binlog_Do_DB: 
+ Binlog_Ignore_DB: 
+Executed_Gtid_Set: 
+1 row in set (0.00 sec)
+```
+
+从 
+
+```shell
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| test               |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> use test;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_test |
++----------------+
+| table1         |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select * from table1;
++---------+---------+
+| column1 | column2 |
++---------+---------+
+|     100 |     200 |
++---------+---------+
+1 row in set (0.00 sec)
+
+# 留意 Exec_Source_Log_Pos: 1932
+mysql> SHOW REPLICA STATUS\G
+*************************** 1. row ***************************
+             Replica_IO_State: Waiting for source to send event
+                  Source_Host: 192.168.1.205
+                  Source_User: repl
+                  Source_Port: 3307
+                Connect_Retry: 60
+              Source_Log_File: binlog.000007
+          Read_Source_Log_Pos: 1932
+               Relay_Log_File: centos-relay-bin.000002
+                Relay_Log_Pos: 1001
+        Relay_Source_Log_File: binlog.000007
+           Replica_IO_Running: Yes
+          Replica_SQL_Running: Yes
+              Replicate_Do_DB: 
+          Replicate_Ignore_DB: 
+           Replicate_Do_Table: 
+       Replicate_Ignore_Table: 
+      Replicate_Wild_Do_Table: 
+  Replicate_Wild_Ignore_Table: 
+                   Last_Errno: 0
+                   Last_Error: 
+                 Skip_Counter: 0
+          Exec_Source_Log_Pos: 1932
+              Relay_Log_Space: 1212
+              Until_Condition: None
+               Until_Log_File: 
+                Until_Log_Pos: 0
+           Source_SSL_Allowed: No
+           Source_SSL_CA_File: 
+           Source_SSL_CA_Path: 
+              Source_SSL_Cert: 
+            Source_SSL_Cipher: 
+               Source_SSL_Key: 
+        Seconds_Behind_Source: 0
+Source_SSL_Verify_Server_Cert: No
+                Last_IO_Errno: 0
+                Last_IO_Error: 
+               Last_SQL_Errno: 0
+               Last_SQL_Error: 
+  Replicate_Ignore_Server_Ids: 
+             Source_Server_Id: 3307
+                  Source_UUID: e5a25096-fec1-11ed-8f94-000c29dc1b1f
+             Source_Info_File: mysql.slave_master_info
+                    SQL_Delay: 0
+          SQL_Remaining_Delay: NULL
+    Replica_SQL_Running_State: Replica has read all relay log; waiting for more updates
+           Source_Retry_Count: 86400
+                  Source_Bind: 
+      Last_IO_Error_Timestamp: 
+     Last_SQL_Error_Timestamp: 
+               Source_SSL_Crl: 
+           Source_SSL_Crlpath: 
+           Retrieved_Gtid_Set: 
+            Executed_Gtid_Set: 
+                Auto_Position: 0
+         Replicate_Rewrite_DB: 
+                 Channel_Name: 
+           Source_TLS_Version: 
+       Source_public_key_path: 
+        Get_Source_public_key: 0
+            Network_Namespace: 
+1 row in set (0.00 sec)
+
+```
+
 ## 单机部署多实例
+
+https://dev.mysql.com/doc/refman/8.0/en/mysqld-multi.html
 
 ```shell
 $ export PATH=$PATH:/usr/local/mysql/bin
