@@ -1,5 +1,306 @@
 # MySQL 8.x 手册
 
+## binary logs 数据恢复 全量备份 + 增量备份
+
+假设数据库每天凌晨4点进行一次全量备份
+
+```shell
+$ crontab -l
+0 4 * * * mysqldump -h127.0.0.1 -uroot -proot --lock-all-tables --flush-logs --routines --databases db1 | gzip > /opt/mysql_db1_$(date +%Y%m%d_%H%M%S).sql.gz
+# 模拟凌晨四点已备份，--databases才会生成create database db1;并use db1;的语句，否者不会
+$ mysqldump -h127.0.0.1 -uroot -proot --lock-all-tables --flush-logs --routines --databases db1 | gzip > /opt/mysql_db1_$(date +%Y%m%d_%H%M%S).sql.gz
+mysqldump: [Warning] Using a password on the command line interface can be insecure.
+# 解压查看
+$ gzip --decompress mysql_db1_20230531_174438.sql.gz
+```
+
+假设进行了一些列的正常操作
+
+```shell
+mysql> use db1;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> select * from tb1;
++------+------+
+| c1   | c2   |
++------+------+
+|  100 |  100 |
++------+------+
+1 row in set (0.00 sec)
+
+mysql> insert into tb1 values (200, 200);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into tb1 values (300, 300);
+Query OK, 1 row affected (0.00 sec)
+```
+
+假设不小心删掉了 db1 数据库 
+
+```shell
+mysql> drop database db1;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| school             |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+```
+
+恢复数据
+
+1. 先flush logs，让mysql使用新的binlog文件，避免搞混当前有用的binlog文件
+2. 进行一次全量恢复；
+3. 进行一次drop database前的增量恢复。
+
+```shell
+mysql> flush logs;
+Query OK, 0 rows affected (0.02 sec)
+
+（增量恢复，使用上一个binlog）
+
+$ mysql -h127.0.0.1 -uroot -proot < mysql_db1_20230531_174438.sql 
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| db1                |
+| information_schema |
+| mysql              |
+| performance_schema |
+| school             |
+| sys                |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> use db1;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> select * from tb1;
++------+------+
+| c1   | c2   |
++------+------+
+|  100 |  100 |
++------+------+
+1 row in set (0.00 sec)
+
+mysql> show binlog events in 'binlog.000017';
++---------------+-----+----------------+-----------+-------------+--------------------------------------+
+| Log_name      | Pos | Event_type     | Server_id | End_log_pos | Info                                 |
++---------------+-----+----------------+-----------+-------------+--------------------------------------+
+| binlog.000017 |   4 | Format_desc    |         1 |         126 | Server ver: 8.0.33, Binlog ver: 4    |
+| binlog.000017 | 126 | Previous_gtids |         1 |         157 |                                      |
+| binlog.000017 | 157 | Anonymous_Gtid |         1 |         236 | SET @@SESSION.GTID_NEXT= 'ANONYMOUS' |
+| binlog.000017 | 236 | Query          |         1 |         310 | BEGIN                                |
+| binlog.000017 | 310 | Table_map      |         1 |         359 | table_id: 184 (db1.tb1)              |
+| binlog.000017 | 359 | Write_rows     |         1 |         403 | table_id: 184 flags: STMT_END_F      |
+| binlog.000017 | 403 | Xid            |         1 |         434 | COMMIT /* xid=272 */                 |
+| binlog.000017 | 434 | Anonymous_Gtid |         1 |         513 | SET @@SESSION.GTID_NEXT= 'ANONYMOUS' |
+| binlog.000017 | 513 | Query          |         1 |         587 | BEGIN                                |
+| binlog.000017 | 587 | Table_map      |         1 |         636 | table_id: 184 (db1.tb1)              |
+| binlog.000017 | 636 | Write_rows     |         1 |         680 | table_id: 184 flags: STMT_END_F      |
+| binlog.000017 | 680 | Xid            |         1 |         711 | COMMIT /* xid=273 */                 |
+| binlog.000017 | 711 | Anonymous_Gtid |         1 |         788 | SET @@SESSION.GTID_NEXT= 'ANONYMOUS' |
+| binlog.000017 | 788 | Query          |         1 |         889 | drop database db1 /* xid=276 */      |
+| binlog.000017 | 889 | Rotate         |         1 |         933 | binlog.000018;pos=4                  | (这个事件，表示开始转向下一个binlog文件，具体位置也提供了)
++---------------+-----+----------------+-----------+-------------+--------------------------------------+
+15 rows in set (0.00 sec)
+
+$ cd /usr/local/mysql/data
+$ mysqlbinlog --start-position=4 --stop-position=788 binlog.000017 | mysql -h127.0.0.1 -uroot -proot
+
+# 数据完全恢复，到删库前
+mysql> select * from tb1;
++------+------+
+| c1   | c2   |
++------+------+
+|  100 |  100 |
+|  100 |  100 |
+|  200 |  200 |
++------+------+
+3 rows in set (0.00 sec)
+```
+
+## binary logs 恢复刚创建并刚删除的库
+
+正常操作
+
+```shell
+mysql> create database db1;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use db1;
+Database changed
+
+mysql> create table tb1 (c1 int, c2 int);
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> insert into tb1 values (100, 100);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from tb1;
++------+------+
+| c1   | c2   |
++------+------+
+|  100 |  100 |
++------+------+
+1 row in set (0.00 sec)
+```
+
+不小心删除 db1
+
+```shell
+mysql> drop database db1;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| school             |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+```
+
+使用binlog恢复前面正常操作出来的数据
+
+```shell
+mysql> show master status;
++---------------+----------+--------------+------------------+-------------------+
+| File          | Position | Binlog_Do_DB | Binlog_Ignore_DB | Executed_Gtid_Set |
++---------------+----------+--------------+------------------+-------------------+
+| binlog.000013 |     1346 |              |                  |                   |
++---------------+----------+--------------+------------------+-------------------+
+1 row in set (0.00 sec)
+
+mysql> show binlog events in 'binlog.000013'\G
+
+# 查到创建db1，到删除db1的事件，省略了前面的事件
+*************************** 8. row ***************************
+   Log_name: binlog.000013
+        Pos: 590
+ Event_type: Query
+  Server_id: 1
+End_log_pos: 695
+       Info: create database db1 /* xid=10 */
+*************************** 9. row ***************************
+   Log_name: binlog.000013
+        Pos: 695
+ Event_type: Anonymous_Gtid
+  Server_id: 1
+End_log_pos: 772
+       Info: SET @@SESSION.GTID_NEXT= 'ANONYMOUS'
+*************************** 10. row ***************************
+   Log_name: binlog.000013
+        Pos: 772
+ Event_type: Query
+  Server_id: 1
+End_log_pos: 891
+       Info: use `db1`; create table tb1 (c1 int, c2 int) /* xid=16 */
+*************************** 11. row ***************************
+   Log_name: binlog.000013
+        Pos: 891
+ Event_type: Anonymous_Gtid
+  Server_id: 1
+End_log_pos: 970
+       Info: SET @@SESSION.GTID_NEXT= 'ANONYMOUS'
+*************************** 12. row ***************************
+   Log_name: binlog.000013
+        Pos: 970
+ Event_type: Query
+  Server_id: 1
+End_log_pos: 1044
+       Info: BEGIN
+*************************** 13. row ***************************
+   Log_name: binlog.000013
+        Pos: 1044
+ Event_type: Table_map
+  Server_id: 1
+End_log_pos: 1093
+       Info: table_id: 94 (db1.tb1)
+*************************** 14. row ***************************
+   Log_name: binlog.000013
+        Pos: 1093
+ Event_type: Write_rows
+  Server_id: 1
+End_log_pos: 1137
+       Info: table_id: 94 flags: STMT_END_F
+*************************** 15. row ***************************
+   Log_name: binlog.000013
+        Pos: 1137
+ Event_type: Xid
+  Server_id: 1
+End_log_pos: 1168
+       Info: COMMIT /* xid=17 */
+*************************** 16. row ***************************
+   Log_name: binlog.000013
+        Pos: 1168
+ Event_type: Anonymous_Gtid
+  Server_id: 1
+End_log_pos: 1245
+       Info: SET @@SESSION.GTID_NEXT= 'ANONYMOUS'
+*************************** 17. row ***************************
+   Log_name: binlog.000013
+        Pos: 1245
+ Event_type: Query
+  Server_id: 1
+End_log_pos: 1346
+       Info: drop database db1 /* xid=19 */
+17 rows in set (0.00 sec)
+```
+
+ Pos: 590 -> End_log_pos: 1245
+ 
+```shell
+$ cd /usr/local/mysql/data
+$ mysqlbinlog --start-position=590 --stop-position=1245 binlog.000013 | mysql -h127.0.0.1 -uroot -proot
+mysql: [Warning] Using a password on the command line interface can be insecure.
+$ mysql -h127.0.0.1 -p
+Enter password: 
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| db1                |
+| information_schema |
+| mysql              |
+| performance_schema |
+| school             |
+| sys                |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> use db1;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> select * from tb1;
++------+------+
+| c1   | c2   |
++------+------+
+|  100 |  100 |
++------+------+
+1 row in set (0.00 sec)
+```
+
 ## 副本/主从
 
 注：全新两个实例，省略主mysqldump备份，然后从mysql执行
