@@ -6,8 +6,42 @@ Redis lists are linked lists of string values. Implement stacks and queues. Buil
 
 链表，存储字符串值。可实现栈和队列。
 
-```redis
+first in, first out  
+first in, last out  
+Atomically pop an element from one list and push to another  
+Lists support several blocking commands.  
+BLPOP removes and returns an element from the head of a list. If the list is empty, the command blocks until an element becomes available or until the specified timeout is reached.
 
+```redis
+# 假设100张5元优惠券，这里使用5张模拟100张
+redis> LPUSH tickets 5 5 5 5 5
+(integer) 5
+# 列表长度为5，总共5张优惠券 elements
+redis> LLEN tickets
+(integer) 5
+# 右侧弹出元素，获取一张优惠券
+redis> RPOP tickets
+"5"
+# 列表长度为4，还剩4张优惠券
+redis> LLEN tickets
+(integer) 4
+# 右侧弹出元素，获取1张优惠券
+redis> RPOP tickets
+"5"
+redis> RPOP tickets
+"5"
+redis> RPOP tickets
+"5"
+redis> RPOP tickets
+"5"
+# 右侧弹出元素，获取1张优惠券，由于优惠券已抢完，结果为nil
+redis> RPOP tickets
+(nil)
+redis> RPOP tickets
+(nil)
+# 列表长度为0，没有优惠券
+redis> LLEN tickets
+(integer) 0
 ```
 
 ## 字符串 strings
