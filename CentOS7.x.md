@@ -50,15 +50,26 @@ $ chown mysql:mysql mysql-files
 $ chmod 750 mysql-files
 $ bin/mysqld --initialize --user=mysql
 $ bin/mysql_ssl_rsa_setup
-$ bin/mysqld_safe --user=mysql &
+$ bin/mysqld_safe --user=mysql & (如果有/etc/my.cnf /etc/my.cnf.d等以前残留的配置文件，需要先删除，ls /etc | grep my，rm -rf /etc/my.cnf /etc/my.cnf.d)
 # Next command is optional
 $ cp support-files/mysql.server /etc/init.d/mysql.server
 
 修改初始密码 留意bin/mysqld --initialize --user=mysql输出的初始密码
-mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY 'root';
+https://dev.mysql.com/doc/refman/8.0/en/alter-user.html
+
+mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY 'root'; 
+(指定认证插件并使用修改当前用户ALTER USER USER() IDENTIFIED  WITH caching_sha2_password BY 'root';)
+(mysql_native_password)
 Query OK, 0 rows affected (0.01 sec)
-mysql> FLUSH PRIVILEGES;
+mysql> FLUSH PRIVILEGES; (可以不需要)
 Query OK, 0 rows affected (0.00 sec)
+mysql> select user();
++----------------+
+| user()         |
++----------------+
+| root@localhost |
++----------------+
+1 row in set (0.00 sec)
 ```
 
 ```shell
