@@ -73,7 +73,7 @@ $ mysqlSourcePath=/mysql/mysql-8.0.33
 $ cmake3 -DCMAKE_INSTALL_PREFIX=${mysqlSourcePath} -DDOWNLOAD_BOOST=0 -DWITH_BOOST=${mysqlSourcePath}/boost/boost_1_77_0 ${mysqlSourcePath}
 $ make
 $ make install
-...
+```
 
 ## 安装 devtoolset 开发工具集 c/c++
 
