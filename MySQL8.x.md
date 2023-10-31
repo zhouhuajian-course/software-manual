@@ -1,5 +1,37 @@
 # MySQL 8.x 手册
 
+## 存储过程 批量造数据
+
+```sql
+-- 第一步
+DROP PROCEDURE IF EXISTS db1.procedure_name;
+
+-- 第二步
+DELIMITER $$
+
+-- 第三步
+CREATE PROCEDURE `db1`.`procedure_name`(IN amount INT, IN prefix CHAR(4))
+begin
+    -- select amount;
+    SET @i = 0;
+    WHILE (@i < amount) DO
+        set @code = concat(prefix, LPAD(@i, 8, 0));
+        -- select @code;
+        INSERT INTO db1.tb1 (code) values (@code);
+        SELECT LAST_INSERT_ID() into @id;
+        -- select @id;
+        INSERT INTO db1.tb2 (id) values (@id);
+        SET @i  = @i + 1;
+    END WHILE;
+END$$
+
+-- 第四步
+DELIMITER ;
+
+-- 第五步
+CALL db1.procedure_name(2, 'AB01');
+```
+
 ## binary logs 数据恢复 全量备份 + 增量备份
 
 假设数据库每天凌晨4点进行一次全量备份
