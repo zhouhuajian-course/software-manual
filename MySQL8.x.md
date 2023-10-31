@@ -1,5 +1,11 @@
 # MySQL 8.x 手册
 
+## 查询出来的数据 导出到csv
+
+```shell
+mysql -h 192.168.1.201 -P 3306 -u root -proot -e "select * from students" -s school | sed -e "s/\t/,/g" > students.csv
+```
+
 ## 存储过程 批量造数据
 
 ```sql
