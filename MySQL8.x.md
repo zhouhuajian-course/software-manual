@@ -38,6 +38,9 @@ DELIMITER ;
 CALL db1.procedure_name(2, 'AB01');
 ```
 
+> https://dev.mysql.com/doc/refman/8.0/en/create-procedure.html
+> https://dev.mysql.com/doc/refman/8.0/en/user-variables.html
+
 ## binary logs 数据恢复 全量备份 + 增量备份
 
 假设数据库每天凌晨4点进行一次全量备份
