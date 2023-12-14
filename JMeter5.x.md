@@ -2,6 +2,26 @@
 
 https://jmeter.apache.org/
 
+## BeanShell
+
+https://jmeter.apache.org/usermanual/component_reference.html#BeanShell_Sampler
+
+https://github.com/beanshell/beanshell  
+https://beanshell.github.io/  
+https://beanshell.github.io/manual/bshmanual.html
+
+BeanShell 开头的六个组件， 是 JMeter 非常重要的主键，BeanShell的使用主要是用在一些特殊的测试用例上，常规方式无法实现或不好实现。
+
+- BeanShell Sampler
+- BeanShell Listener
+- BeanShell Assertion
+- BeanShell Timer
+- BeanShell PreProcessor
+- BeanShell PostProcessor
+  
+
+
+
 ## HTTP 开头的配置元件
 
 （模拟浏览器行为）
