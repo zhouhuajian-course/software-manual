@@ -2,6 +2,16 @@
 
 https://jmeter.apache.org/
 
+## HTTP 开头的配置元件
+
+（模拟浏览器行为）
+
+- HTTP信息头管理器
+- HTTP Cookie管理器
+- HTTP缓存管理器
+- HTTP请求默认值
+- HTTP授权管理器
+
 ## 使用CSV数据
 
 ```
