@@ -1,5 +1,22 @@
 # Windows
 
+## 缩放后，个别软件界面模糊
+
+右键 -> 属性 -> 更改高DPI设置 ->  
+替代高DPI缩放行为 -> 勾选 -> 确定 -> 确定
+
+## Firefox 手动扩展安装
+
+```
+解决 安装 AdBlock 出现 您尝试访问的页面在您的地区不可用。
+
+1. 访问 https://addons.mozilla.org/zh-CN/firefox/
+2. 搜索AdBlock
+3. 下载扩展 adblock_for_firefox-5.4.2.xpi
+4. 拖到 Firefox 即可安装
+(xpi文件也可以通过其他网站下载)
+```
+
 ## 内网远程桌面控制
 
 ```
