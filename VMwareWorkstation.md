@@ -1,5 +1,39 @@
 # VMware Workstation
 
+## Ubuntu 桌面版安装
+
+```
+1. 下载 Ubuntu 桌面版 
+   https://ubuntu.com/
+   Download -> Get Ubuntu Desktop
+   ubuntu-22.04.3-desktop-amd64.iso
+2. 创建新的虚拟机 -> 典型(推荐) -> 稍后安装操作系统  -> 
+     选择客户机操作系统 Linux 版本 Ubuntu 64 位
+   -> 填写虚拟机名、选择存储位置
+     -> 自定义硬件 -> 新CD/DVD -> 使用 ISO 镜像文件
+     -> 选择下载的 ubuntu-22.04.3-desktop-amd64.iso
+   -> 关闭 -> 完成
+3. 开启此虚拟机 -> 中文(简体) -> 安装 Ubuntu -> 键盘布局 Chinese Chinese 继续
+    -> 正常安装 （可以去掉 安装 Ubuntu 时下载更新） 继续 
+   -> 这台计算机似乎没有安装操作系统 
+    -> 清除整个磁盘并安装 Ubuntu -> 现在安装 -> 继续
+    -> 您在什么地方 -> 地图点击中国 -> 选 Shanghai - 上海 继续
+    -> 创建用户 zhouhuajian zhouhuajain
+  -> 现在重启
+4. 需要 把 CD/DVD 改为自动检测，然后再启动，不然启动不了
+
+隐藏顶部时钟/隐藏顶部
+
+1. sudo apt update
+2. 安装Gnome扩展管理器 sudo apt install gnome-shell-extension-manager 
+3. 左下角 应用程序启动器 -> 搜索 Extension 打开
+4. 搜索 hidetop
+5. 最下面 Hide Clock 安装即可
+6. 搜索hidetop，选择按下载
+7.  Hide Top Bar 下载即可
+备注：搜索功能貌似很不好用，多用不同方式尝试
+```
+
 ## CentOS 7 扩大硬盘空间
 
 1. Virtual Machine Settings -> Hard Disk -> Expand disk capacity -> 设置为40GB (原来20GB) -> Expand
