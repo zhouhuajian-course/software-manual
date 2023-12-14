@@ -2,10 +2,19 @@
 
 https://jmeter.apache.org/
 
+## 日志查看 
+
+选项 -> 日志查看
+
+## 界面模糊问题
+
+关闭JMeter -> 125% -> 启动JMeter -> 放大JMeter
+
 ## BeanShell
 
 https://jmeter.apache.org/usermanual/component_reference.html#BeanShell_Sampler
 
+http://www.beanshell.org/  
 https://github.com/beanshell/beanshell  
 https://beanshell.github.io/  
 https://beanshell.github.io/manual/bshmanual.html
@@ -18,9 +27,8 @@ BeanShell 开头的六个组件， 是 JMeter 非常重要的主键，BeanShell�
 - BeanShell Timer
 - BeanShell PreProcessor
 - BeanShell PostProcessor
-  
 
-
+参考 BeanShell组件测试.jmx
 
 ## HTTP 开头的配置元件
 
