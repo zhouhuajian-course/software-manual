@@ -4,7 +4,7 @@
 
 **创建目录**
 
-GRADLE_USER_HOME 默认 C:\Users\zhouhuajian\.gradle 下创建目录 init.d （没有时创建）
+GRADLE_USER_HOME （默认 C:\Users\zhouhuajian\.gradle） 下创建目录 init.d （没有时创建）
 
 **创建文件**
 
