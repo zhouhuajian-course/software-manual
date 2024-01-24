@@ -1,5 +1,34 @@
 # InteliJ IDEA
 
+## Gradle 设置所有项目 使用 阿里镜像源
+
+**创建目录**
+
+GRADLE_USER_HOME 默认 C:\Users\zhouhuajian\.gradle 下创建目录 init.d （没有时创建）
+
+**创建文件**
+
+build.gradle
+
+```
+allprojects {
+    repositories {
+        maven {
+            url 'https://maven.aliyun.com/repository/public/'
+        }
+        maven {
+            url 'https://maven.aliyun.com/repository/google/'
+        }
+    }
+    buildscript {
+        repositories {
+            maven{ url 'https://maven.aliyun.com/repository/public/'}
+            maven{ url 'https://maven.aliyun.com/repository/google/'}
+        }
+    }
+}
+```
+
 ## Gradle 下载 出现 Connect timed out
 
 **原因**
