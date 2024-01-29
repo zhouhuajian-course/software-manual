@@ -1,6 +1,6 @@
 # Typora
 
-## 一页网页技术文档 打印
+## 一页网页技术文档 转 pdf
 
 1. Chrome 检测，找到大纲，copy outer html，保存到 VSCode；
 2. 找到 内容，copy outer html，追加，保存到git仓库，提交一次；
