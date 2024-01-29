@@ -1,5 +1,16 @@
 # Typora
 
+## 一页网页技术文档 打印
+
+1. Chrome 检测，找到大纲，copy outer html，保存到 VSCode；
+2. 找到 内容，copy outer html，追加，保存到git仓库，提交一次；
+3. 去掉 script 标签内容、去掉注释内容<!-- -->，git提交一次；
+4. 网页在线，html转markdown，git提交一次；
+5. typora打开，主题用vue，看情况调整，导出html；
+6. 这步，看下面的说明；
+7. 如果pdf页数太多，vscode删减，不需要的部分，例如大量配置项，大量表单项、大量版本升级等内容，git提交一次；
+8. 重复第5步。
+
 ## 修改 导出的 PDF 的字体大小
 
 另一种办法 
