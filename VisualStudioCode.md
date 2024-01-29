@@ -6,6 +6,14 @@ https://github.com/Microsoft/vscode/
 
 TypeScript 是微软开发的一个开源的编程语言，通过在 JavaScript 的基础上添加静态类型定义构建而成。
 
+## 实时预览 HTML
+
+安装插件 Live Server 
+
+必须打开项目 Open Folder，不能打开单独html使用
+
+右键 Open With Live Server
+
 ## IntelliSense
 
 智能感知
