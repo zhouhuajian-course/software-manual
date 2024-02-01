@@ -1,5 +1,12 @@
 # VMware Workstation
 
+## 查看机器是 AMD64 还是 X64
+
+```shell
+$ cat /proc/version
+Linux version 3.10.0-1160.el7.x86_64 (mockbuild@kbuilder.bsys.centos.org) (gcc version 4.8.5 20150623 (Red Hat 4.8.5-44) (GCC) ) #1 SMP Mon Oct 19 16:18:59 UTC 2020
+```
+
 ## 关机方式
 
 一定要在终端使用 init 0 关机，使用 VMWare 关机，大概率导致机器坏掉
