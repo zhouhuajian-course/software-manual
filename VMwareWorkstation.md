@@ -1,5 +1,34 @@
 # VMware Workstation
 
+## 关机方式
+
+一定要在终端使用 init 0 关机，使用 VMWare 关机，大概率导致机器坏掉
+
+## 克隆机器 并修改 IP MAC UUID 信息 确保相互能 ping 通
+
+克隆比创建新虚拟机然后安装系统快很多，推荐
+
+1. 如果机器开始，init 0，先关闭机器
+2. 右键，管理，克隆，从当前状态克隆，下一步
+3. 创建一个完整克隆，取虚拟机名字，检查路径
+
+> UUID（Universally Unique Identifier）是系统层面的全局唯一标识符号，Mac地址以及IP地址是网络层面的标识号  
+> 两台不同的Linux系统拥有相同的UUID并不影响系统的使用以及系统之间的通信  
+> CentOS 7与CentOS 6不同，CentOS 7 的IP、MAC、UUID 都在同一个ifcfg-ens33文件中配置  
+
+1. 因为克隆后，IP地址、UUID跟原来一模一样  
+需要启动，然后使用原来IP登录，修改IP，修改方式查看“修改IP地址”
+2. 修改UUID，不改也行，cd /etc/sysconfig/network-scripts，uuidgen ifcfg-ens33，替换里面的UUID的值 
+3. 如果ifcfg-ens33中有，MACADDR配置，注释或删除即可；
+4. 然后每台都要，重启一下，VMWare，默认每次重启会自动使用新的MAC地址，不用修改Max地址，ifconfig看ether 00:0c:29:e2:78:38
+
+## 修改IP地址
+
+1. vi /etc/sysconfig/network-scripts/ifcfg-ens33
+2. IPADDR=192.168.1.201
+3. systemctl restart network 重启网络
+4. 使用新IP进行登录，旧的会话会卡一会，然后连接失败
+
 ## Ubuntu 桌面版安装
 
 ```
