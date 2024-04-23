@@ -6,7 +6,11 @@ Apache HTTP Server 项目使用 Subversion 托管其源代码。 GitHub 的只�
 
 httpd.conf 里面的配置  configuration directive 配置指令/命令 例如DocumentRoot directory-path	、<VirtualHost addr[:port] [addr[:port]] ...> ... </VirtualHost>
 
-https://httpd.apache.org/docs/2.4/en/mod/quickreference.html
+其中<...> 可叫 section directive 或 directive 或  section container
+
+https://httpd.apache.org/docs/2.4/mod/directives.html  
+https://httpd.apache.org/docs/2.4/en/mod/quickreference.html  
+https://httpd.apache.org/docs/2.4/sections.html
 
 该DocumentRoot指令指定应将这些文件放置在文件系统中的位置。该指令可以全局设置，也可以按虚拟主机设置。
 
@@ -17,6 +21,9 @@ https://httpd.apache.org/docs/2.4/en/mod/quickreference.html
 ```
 Listen [IP-address:]portnumber [protocol]		  
   IP addresses and ports that the server listens to
+
+ServerName [scheme://]domain-name|ip-address[:port]		
+  Hostname and port that the server uses to identify itself
 
 DocumentRoot directory-path  	
   Directory that forms the main document tree visible from the web
