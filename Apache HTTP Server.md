@@ -42,6 +42,12 @@ The Listen directive does not implement Virtual Hosts - it only tells the main s
 
 https://httpd.apache.org/docs/2.4/bind.html
 
+指令不区分大小写 推荐使用驼峰命名法 但是指令参数通常是区分大小写的
+
+Directives in the configuration files are case-insensitive, but arguments to directives are often case sensitive. 
+
+https://httpd.apache.org/docs/2.4/configuring.html
+
 ## VMWare 禁用共享虚拟机 解决 443 端口被占用问题
 
 启动 VMWare -> 编辑 -> 首选项 -> 共享虚拟机 -> 禁用
