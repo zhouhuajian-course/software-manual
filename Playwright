@@ -1,0 +1,58 @@
+# Playwright
+
+```cmd
+>pip install -i https://pypi.tuna.tsinghua.edu.cn/simple playwright
+Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple
+Collecting playwright
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/87/0f/c8dcadb2f0dcfdab6052d5ecf57ccf19b439c0adc29fc510ed0830349345/playwright-1.45.0-py3-none-win_amd64.whl (29.7 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 29.7/29.7 MB 706.8 kB/s eta 0:00:00
+Collecting greenlet==3.0.3 (from playwright)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/53/80/3d94d5999b4179d91bcc93745d1b0815b073d61be79dd546b840d17adb18/greenlet-3.0.3-cp312-cp312-win_amd64.whl (293 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 293.6/293.6 kB 789.4 kB/s eta 0:00:00
+Collecting pyee==11.1.0 (from playwright)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/16/cc/5cea8a0a0d3deb90b5a0d39ad1a6a1ccaa40a9ea86d793eb8a49d32a6ed0/pyee-11.1.0-py3-none-any.whl (15 kB)
+Requirement already satisfied: typing-extensions in d:\python\python3.12\lib\site-packages (from pyee==11.1.0->playwright) (4.12.2)
+Installing collected packages: pyee, greenlet, playwright
+Successfully installed greenlet-3.0.3 playwright-1.45.0 pyee-11.1.0
+
+[notice] A new release of pip is available: 24.0 -> 24.1.1
+[notice] To update, run: python.exe -m pip install --upgrade pip
+```
+
+安装的浏览器 默认安装 Chromium Firefox Webkit
+
+```cmd
+> playwright install -h
+Usage: playwright install [options] [browser...]
+
+ensure browsers necessary for this version of Playwright are installed
+
+Options:
+  --with-deps  install system dependencies for browsers
+  --dry-run    do not execute installation, only print information
+  --force      force reinstall of stable browser channels
+  -h, --help   display help for command
+
+
+Examples:
+  - $ install
+    Install default browsers.
+
+  - $ install chrome firefox
+    Install custom browsers, supports chromium, chrome, chrome-beta, msedge, msedge-beta, msedge-dev, firefox, webkit.
+PS C:\Users\zhouhuajian> playwright install
+Downloading Chromium 127.0.6533.17 (playwright build v1124) from https://playwright.azureedge.net/builds/chromium/1124/chromium-win64.zip
+134.8 MiB [====================] 100% 0.0s
+Chromium 127.0.6533.17 (playwright build v1124) downloaded to C:\Users\zhouhuajian\AppData\Local\ms-playwright\chromium-1124
+Downloading FFMPEG playwright build v1009 from https://playwright.azureedge.net/builds/ffmpeg/1009/ffmpeg-win64.zip
+1.4 MiB [====================] 100% 0.0s
+FFMPEG playwright build v1009 downloaded to C:\Users\zhouhuajian\AppData\Local\ms-playwright\ffmpeg-1009
+Downloading Firefox 127.0 (playwright build v1454) from https://playwright.azureedge.net/builds/firefox/1454/firefox-win64.zip
+83.1 MiB [====================] 100% 0.0s
+Firefox 127.0 (playwright build v1454) downloaded to C:\Users\zhouhuajian\AppData\Local\ms-playwright\firefox-1454
+Downloading Webkit 17.4 (playwright build v2035) from https://playwright.azureedge.net/builds/webkit/2035/webkit-win64.zip
+45.1 MiB [====================] 100% 0.0s
+Webkit 17.4 (playwright build v2035) downloaded to C:\Users\zhouhuajian\AppData\Local\ms-playwright\webkit-2035
+```
+
+C:\Users\zhouhuajian\AppData\Local\ms-playwright
