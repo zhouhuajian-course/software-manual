@@ -6,6 +6,8 @@ https://dbeaver.io/
 
 https://github.com/dbeaver/dbeaver
 
+替代收费的 Navicat
+
 ## 导出数据库
 
 1. 选择数据库
