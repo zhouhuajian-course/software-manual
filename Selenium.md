@@ -10,7 +10,8 @@ https://www.selenium.dev/
     actions = ActionChains(driver)
     actions.double_click(element).perform()
     ```
-3. PyCharm 调试时，使用新打开的Chrome，右上角操作，各占一半，更方便，而不是用PyCharm的右上角操作各占一半，会麻烦很多，当然，好像用PyCharm各占一半，也挺方便的，看习惯吧
+2. PyCharm 调试时，使用新打开的Chrome，右上角操作，各占一半，更方便，而不是用PyCharm的右上角操作各占一半，会麻烦很多，当然，好像用PyCharm各占一半，也挺方便的，看习惯吧
+3.  debug 调试完使用 继续 Resume Program 的方式，而不是停止，否者可能要按两次，才能停
 
 ## Selenium IDE
 
@@ -23,3 +24,4 @@ https://www.selenium.dev/selenium-ide/
 5. 只是个扩展 保存，其实就是下载，第一次右侧没有选项，这个是bug，保存项目，然后右上角重新打开项目即可，不需要重启Selenium IDE
 6. 打开的窗口 Selenium IDE，他的图标都变成 Selenium 的图标，本质上其实就是一个，浏览器窗口，页面都是HTML CSS渲染的，交互则是 JavaScript，让你看起来像是个软件一样，其实不是只是个页面而已；
 7. 下载的东西 .side .py 都好，默认下到下载目录，然后可以看Chrome下载记录，方便查看，方便打开；点击右侧 在文件夹显示，可方便拷贝整个文件
+8. 测试模块名，可以以url命名 例如/login，就叫login /home就叫home /pms/product就叫pms_product
