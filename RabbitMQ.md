@@ -44,13 +44,15 @@ Mon  19:29                 4 rabbit@HP±Ê¼Ç±¾.pid
 C:\Users\zhouhuajian\AppData\Roaming\RabbitMQ\db>
 ```
 
-貌似是计算机名有中文的问题  
+是计算机名有中文的问题  
 
 1. 修改 右键我的电脑 => 属性 => 高级系统设置 => 计算机名 => 修改    需要重启电脑生效  
 2. 卸载rabbitmq  
 3. 清空 C:\Users\zhouhuajian\AppData\Roaming\RabbitMQ
 4. 重启
 5. 重装rabbitmq
+
+问题解决
 
 ## 默认数据目录
 
