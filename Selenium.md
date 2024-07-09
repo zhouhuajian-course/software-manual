@@ -4,8 +4,13 @@
 
 https://www.selenium.dev/
 
-1. send_keys("admin") 如果原来 input 有 value，不会覆盖，而是追加，所以需要覆盖，需要清空一下，可以先调clear()，或者先调
-2. PyCharm 调试时，使用新打开的Chrome，右上角操作，各占一半，更方便，而不是用PyCharm的右上角操作各占一半，会麻烦很多，当然，好像用PyCharm各占一半，也挺方便的，看习惯吧
+1. send_keys("admin") 如果原来 input 有 value，不会覆盖，而是追加，所以需要覆盖，需要清空一下，可以先调clear()，或者使用动作链进行双击选中文本，再输入就是覆盖，
+    ```
+    element = driver.find_element(By.NAME, "password")
+    actions = ActionChains(driver)
+    actions.double_click(element).perform()
+    ```
+3. PyCharm 调试时，使用新打开的Chrome，右上角操作，各占一半，更方便，而不是用PyCharm的右上角操作各占一半，会麻烦很多，当然，好像用PyCharm各占一半，也挺方便的，看习惯吧
 
 ## Selenium IDE
 
