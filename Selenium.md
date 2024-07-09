@@ -25,3 +25,8 @@ https://www.selenium.dev/selenium-ide/
 6. 打开的窗口 Selenium IDE，他的图标都变成 Selenium 的图标，本质上其实就是一个，浏览器窗口，页面都是HTML CSS渲染的，交互则是 JavaScript，让你看起来像是个软件一样，其实不是只是个页面而已；
 7. 下载的东西 .side .py 都好，默认下到下载目录，然后可以看Chrome下载记录，方便查看，方便打开；点击右侧 在文件夹显示，可方便拷贝整个文件
 8. 测试模块名，可以以url命名 例如/login，就叫login /home就叫home /pms/product就叫pms_product
+9. 上传文件 Chrome 才支持，但选择文件的窗口还是会弹出，原因是做了点击操作，解决办法是把上面点击的命令给删除掉即可， https://www.selenium.dev/selenium-ide/docs/en/api/commands#type
+   ```
+   type
+    Sets the value of an input field, as though you typed it in. Can also be used to set the value of combo boxes, check boxes, etc. In these cases, value should be the value of the option selected, not the visible text. Chrome only: If a file path is given it will be uploaded to the input (for type=file), NOTE: XPath locators are not supported.
+   ```
