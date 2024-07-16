@@ -32,3 +32,6 @@ https://www.selenium.dev/selenium-ide/
     Sets the value of an input field, as though you typed it in. Can also be used to set the value of combo boxes, check boxes, etc. In these cases, value should be the value of the option selected, not the visible text. Chrome only: If a file path is given it will be uploaded to the input (for type=file), NOTE: XPath locators are not supported.
     ```
 11. Selenium IDE 把命令清理干净后，再调试，再导出更好，右键可以删除
+12. 创建 Test Suites ，类似文件夹，然后创建测试用例，然后再test suites里面添加创建出来的测试用例
+13. 命令 wait for text Value 是文本内容，命令wait for element visible Value 是超时时间，单位毫秒
+14. Test Suites 使用 login-page home-page 的命名方式，测试用例使用 login-success login-fail show-stats的命名方式
