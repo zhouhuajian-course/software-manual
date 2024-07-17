@@ -12,6 +12,7 @@ https://www.selenium.dev/
     ```
 2. PyCharm 调试时，使用新打开的Chrome，右上角操作，各占一半，更方便，而不是用PyCharm的右上角操作各占一半，会麻烦很多，当然，好像用PyCharm各占一半，也挺方便的，看习惯吧
 3.  debug 调试完使用 继续 Resume Program 的方式，而不是停止，否者可能要按两次，才能停
+4.  clear 无效时，使用driver.refresh()，或者js代码把value设置为空字符串
 
 ## Selenium IDE
 
