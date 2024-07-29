@@ -36,3 +36,4 @@ https://www.selenium.dev/selenium-ide/
 12. 创建 Test Suites ，类似文件夹，然后创建测试用例，然后再test suites里面添加创建出来的测试用例
 13. 命令 wait for text Value 是文本内容，命令wait for element visible Value 是超时时间，单位毫秒
 14. Test Suites 使用 login-page home-page 的命名方式，测试用例使用 login-success login-fail show-stats的命名方式
+15. selenium ide 的 click dbclick 没办法模拟用户点击获取焦点的效果，但是导出pytest代码，使用click() ActionChains().double_click() 会有获取焦点的效果
