@@ -6,6 +6,12 @@ https://github.com/Microsoft/vscode/
 
 TypeScript 是微软开发的一个开源的编程语言，通过在 JavaScript 的基础上添加静态类型定义构建而成。
 
+## HTML 开发
+
+1. 输入 ! 回车，生成 HTML 骨架
+2. 输入 标签名 回车，生成 HTML 标签，比<标签名 要方便
+3. live server 代码修改，自动刷新页面
+
 ## 实时预览 HTML
 
 安装插件 Live Server 
