@@ -6,6 +6,10 @@ https://github.com/Microsoft/vscode/
 
 TypeScript 是微软开发的一个开源的编程语言，通过在 JavaScript 的基础上添加静态类型定义构建而成。
 
+## HTML CSS JS 代码缩进使用 2个空格 而不是 4个空格
+
+设置 搜索 tab size ，设置为2，搜索 Detect Indentation，设置为 off，既取消勾选
+
 ## HTML 开发
 
 1. 输入 ! 回车，生成 HTML 骨架
