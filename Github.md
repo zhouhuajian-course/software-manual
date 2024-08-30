@@ -1,7 +1,7 @@
 # Github
 
 1. Github 文档 首页底部 `https://docs.github.com/zh`
-2. 使用emoji表情 :EMOJICODE: `https://docs.github.com/zh/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#using-emojis` `https://github.com/ikatyang/emoji-cheat-sheet/blob/master/README.md` 🙂
+2. 使用emoji表情 :EMOJICODE: 直接得到真正的 emoji 表情 `https://docs.github.com/zh/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#using-emojis` `https://github.com/ikatyang/emoji-cheat-sheet/blob/master/README.md` 🙂
 
 ## 拉代码/推代码时 github.com 连接超时
 
