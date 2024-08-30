@@ -1,8 +1,11 @@
 # Github
 
+## 提交 使用 Emoji 表情
+
 1. Github 文档 首页底部 `https://docs.github.com/zh`
 2. 使用emoji表情 :EMOJICODE: 直接得到真正的 emoji 表情 `https://docs.github.com/zh/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#using-emojis` `https://github.com/ikatyang/emoji-cheat-sheet/blob/master/README.md` 🙂
 3. 提交的时候，使用 emoji 表情，是提交真正的 emoji 表情，而不是 :EMOJICODE: 纯文本，参考 `https://github.com/carloscuesta/gitmoji` `https://gitmoji.dev/`
+4. 表情后面加个空格
 
 ## 拉代码/推代码时 github.com 连接超时
 
