@@ -4,6 +4,9 @@
 
 https://segmentfault.com/a/1190000041357650
 
+![](https://github.com/user-attachments/assets/358d2946-3e06-42e2-ab4a-74c0e5cf2fad)
+
+
 ## Gradle 设置所有项目 使用 阿里镜像源
 
 **创建目录**
