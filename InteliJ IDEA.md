@@ -2,9 +2,9 @@
 
 ## 行断点 方法断点 字段断点 异常断点
 
-https://segmentfault.com/a/1190000041357650
+https://www.jetbrains.com/help/idea/using-breakpoints.html#breakpoint-icons
 
-![](https://github.com/user-attachments/assets/358d2946-3e06-42e2-ab4a-74c0e5cf2fad)
+![image](https://github.com/user-attachments/assets/de4bbd39-be98-4b74-a7fb-3be64bfa2ca3)
 
 
 ## Gradle 设置所有项目 使用 阿里镜像源
