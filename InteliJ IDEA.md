@@ -1,6 +1,11 @@
 # InteliJ IDEA
 
-## 行断点 方法断点 字段断点 异常断点
+## 行断点 方法断点 字段观察点 异常断点
+
+- Line breakpoints
+- Method breakpoints
+- Field watchpoints
+- Exception breakpoints
 
 https://www.jetbrains.com/help/idea/using-breakpoints.html#breakpoint-icons
 
