@@ -1,5 +1,9 @@
 # InteliJ IDEA
 
+## 去掉 单行代码方法 自动折叠
+
+Settings -> Editor -> General -> Code Folding -> Fold by default -> Java -> One-line methods 去掉勾选
+
 ## 行断点 方法断点 字段观察点 异常断点
 
 - Line breakpoints
