@@ -1,10 +1,21 @@
-# VisualStudioCode
+# Visual Studio Code
 
 https://github.com/Microsoft/vscode/ 
+
+https://code.visualstudio.com/Docs
 
 主要由 TypeScript 开发
 
 TypeScript 是微软开发的一个开源的编程语言，通过在 JavaScript 的基础上添加静态类型定义构建而成。
+
+## VS Code 学习
+
+1. VS Code 是轻量级编辑器，大部分功能需要通过扩展的方式进行扩展；
+2. VS Code 内置了对 JavaScript、TypeScript、HTML、CSS 等语言的支持；
+3. 安装语言扩展可以添加对不同语言的支持，例如Python；
+4. Tab 插入选定的建议，在 VS Code 中通常都是使用 Tab 来选中代码建议，而不是回车，这个很重要！！！；
+5. Git U表示未跟踪/新文件；
+6. VS Code 内置了对运行和调试 Node.js 应用程序的支持；
 
 ## 关闭鼠标悬停提示
 
